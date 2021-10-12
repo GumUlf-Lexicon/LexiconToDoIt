@@ -1,5 +1,5 @@
-﻿using Xunit;
-using LexiconToDoIt.Data;
+﻿using LexiconToDoIt.Data;
+using Xunit;
 
 namespace LexiconToDoIt.Tests.Data
 {
@@ -8,14 +8,30 @@ namespace LexiconToDoIt.Tests.Data
 		[Fact]
 		public void IncreaseIdWithOneWithNextPersonId()
 		{
-			// Arrange
+			// Arrange 
 			int before = PersonSequencer.PersonId;
 
 			// Act
-			int after = PersonSequencer.nextPersonId();
+			int ReturnedPersonId = PersonSequencer.nextPersonId();
+			int after = PersonSequencer.PersonId;
 
 			// Assert
-			Assert.Equal(before + 1, after);
+			Assert.True(before < after);
+			Assert.Equal(ReturnedPersonId + 1, after);
+		}
+
+		[Fact]
+		public void TheCurrentNextPersonIdWithNextPersonId()
+		{
+			// Arrange
+			int current = PersonSequencer.PersonId;
+
+			// Act
+			int returnedPersonId = PersonSequencer.nextPersonId();
+
+			// Assert
+			Assert.Equal(current, returnedPersonId);
+
 		}
 
 		[Fact]

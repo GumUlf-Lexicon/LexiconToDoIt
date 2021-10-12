@@ -1,6 +1,4 @@
-﻿
-
-namespace LexiconToDoIt.Data
+﻿namespace LexiconToDoIt.Data
 {
 	public class PersonSequencer
 	{
