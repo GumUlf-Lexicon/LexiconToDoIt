@@ -3,8 +3,7 @@
 	public class PersonSequencer
 	{
 		private static int personId = 0;
-
-		public static int PersonId { get => personId;}
+		public static int PersonId => personId;
 
 		// Get the next availible personId
 		public static int nextPersonId()

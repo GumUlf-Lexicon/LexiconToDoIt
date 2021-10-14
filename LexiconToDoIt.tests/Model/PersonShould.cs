@@ -6,65 +6,36 @@ namespace LexiconToDoIt.Tests.Model
 {
 	public class PersonShould
 	{
+
 		[Fact]
-		public void NotHaveTheSameIdAsAnotherPerson()
+		public void BeAbleToCreateANewPerson()
 		{
-			Person sut = new Person();
-			Person person2 = new Person();
+			// Arrange
+			string firstName = "Jane";
+			string lastName = "Doe";
+			int personId = 42;
 
-			Assert.NotEqual(sut.PersonId, person2.PersonId);
+			// Act
+			Person sut = new Person(firstName, lastName, personId);
+
+			// Assert
+			Assert.Equal(firstName, sut.FirstName);
+			Assert.Equal(lastName, sut.LastName);
+			Assert.Equal(personId, sut.PersonId);
 		}
 
-		[Fact]
-		public void HaveNameUnkownAndUnkownAsNewDefault()
+		[Theory]
+		[InlineData(null, null)]
+		[InlineData(null, "Doe")]
+		[InlineData("Jane", null)]
+		[InlineData(null, "")]
+		[InlineData("", null)]
+		[InlineData("", "")]
+		[InlineData("", "Doe")]
+		[InlineData("Joe", "")]
+		public void NotAllowANullOrEmptyNames(string firstName, string lastName)
 		{
-			Person sut = new Person();
-
-			Assert.Equal("Unkown", sut.FirstName);
-			Assert.Equal("Unkown", sut.LastName);
+			_ = Assert.Throws<ArgumentException>(() => new Person(firstName, lastName, 0));
 		}
-
-		[Fact]
-		public void NotHaveEmptyOrNullNamesAsNewDefault()
-		{
-			Person sut = new Person();
-
-			Assert.NotEmpty(sut.FirstName);
-			Assert.NotNull(sut.FirstName);
-			Assert.NotEmpty(sut.LastName);
-			Assert.NotNull(sut.LastName);
-		}
-
-		[Fact]
-		public void NotAllowEmptyNames()
-		{
-			_ = Assert.Throws<ArgumentException>(() => new Person("", ""));
-		}
-
-		[Fact]
-		public void NotAllowNullNamesAsNew()
-		{
-			_ = Assert.Throws<ArgumentException>(() => new Person(null, null));
-		}
-
-		[Fact]
-		public void NotAllowToSetNamesToEmpty(){
-			Person sut = new Person();
-			_ = Assert.Throws<ArgumentException>(() => sut.FirstName = string.Empty);
-			_ = Assert.Throws<ArgumentException>(() => sut.LastName = string.Empty);
-			_ = Assert.Throws<ArgumentException>(() => sut.FirstName = "");
-			_ = Assert.Throws<ArgumentException>(() => sut.LastName = "");
-
-		}
-
-		[Fact]
-		public void NotAllowToSetNamesToNull()
-		{
-			Person sut = new Person();
-			_ = Assert.Throws<ArgumentException>(() => sut.FirstName = null);
-			_ = Assert.Throws<ArgumentException>(() => sut.LastName = null);
-		}
-
-
 	}
 }
