@@ -3,8 +3,7 @@
 	public class TodoSequencer
 	{
 		private static int todoId = 0;
-
-		public static int TodoId { get => todoId; }
+		public static int TodoId  => todoId;
 
 		// Get the next availible todoId
 		public static int nextTodoId()
@@ -17,7 +16,5 @@
 		{
 			todoId = 0;
 		}
-
-
 	}
 }
