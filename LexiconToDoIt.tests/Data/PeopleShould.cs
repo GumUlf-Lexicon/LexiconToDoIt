@@ -8,30 +8,6 @@ namespace LexiconToDoIt.Tests.Data
 	public class PeopleShould
 	{
 
-		// To not repeate similar code in several tests
-		private void ArrangePeople(out Person[] persons, out People people)
-		{
-			// Arrange
-
-			// personId is set to -1 bc we don't know the real ID yet
-			// The persons in persons will be replaced with new persons
-			// with the correct ID set in the for-loop below.
-			persons = new Person[4];
-			persons[0] = new Person("Jane", "Doe", -1);
-			persons[1] = new Person("Joe", "Doe", -1);
-			persons[2] = new Person("Svea", "Svensson", -1);
-			persons[3] = new Person("Sven", "Svensson", -1);
-
-			people = new People();
-			people.Clear();
-
-			for(int i = 0; i < persons.Length; i++)
-			{
-				Person person = people.NewPerson(persons[i].FirstName, persons[i].LastName);
-				persons[i] = new Person(person.FirstName, person.LastName, person.PersonId);
-				
-			}
-		}
 
 		[Fact]
 		public void HaveTheRightSize()
@@ -128,6 +104,73 @@ namespace LexiconToDoIt.Tests.Data
 			// Assert
 			Assert.True(peopleSizeBefore > 0);
 			Assert.Equal(0, people.Size());
+		}
+
+
+		[Fact]
+		public void BeAbleToRemoveExistingItemByTodoObject()
+		{
+			// Arrange
+			ArrangePeople(out Person[] persons, out People people);
+			Person todoItemToRemove = persons[persons.Length / 2];
+			Person[] sutBefore = people.FindAll();
+
+			// Act
+			bool removeSuccess = people.RemovePerson(todoItemToRemove);
+			Person[] sut = people.FindAll();
+
+			// Assert
+			Assert.True(persons.Length > 0);
+			Assert.Contains(sutBefore, sutPerson => sutPerson == todoItemToRemove);
+			Assert.True(removeSuccess);
+			Assert.DoesNotContain(sut, sutPerson => sutPerson == todoItemToRemove);
+
+
+		}
+
+		[Fact]
+		public void BeAbleToRemoveExistingItemByPersonId()
+		{
+			// Arrange
+			ArrangePeople(out Person[] persons, out People people);
+			int todoItemIdToRemove = persons[persons.Length / 2].PersonId;
+			Person[] sutBefore = people.FindAll();
+
+			// Act
+			bool removeSuccess = people.RemovePerson(todoItemIdToRemove);
+			Person[] sut = people.FindAll();
+
+			// Assert
+			Assert.True(persons.Length > 0);
+			Assert.Contains(sutBefore, sutItem => sutItem.PersonId == todoItemIdToRemove);
+			Assert.True(removeSuccess);
+			Assert.DoesNotContain(sut, sutItem => sutItem.PersonId == todoItemIdToRemove);
+		}
+
+
+		// To not repeate similar code in several of the tests
+		private void ArrangePeople(out Person[] persons, out People people)
+		{
+			// Arrange
+
+			// personId is set to -1 bc we don't know the real ID yet
+			// The persons in persons will be replaced with new persons
+			// with the correct ID set in the for-loop below.
+			persons = new Person[4];
+			persons[0] = new Person("Jane", "Doe", -1);
+			persons[1] = new Person("Joe", "Doe", -1);
+			persons[2] = new Person("Svea", "Svensson", -1);
+			persons[3] = new Person("Sven", "Svensson", -1);
+
+			people = new People();
+			people.Clear();
+
+			for(int i = 0; i < persons.Length; i++)
+			{
+				Person person = people.NewPerson(persons[i].FirstName, persons[i].LastName);
+				persons[i] = new Person(person.FirstName, person.LastName, person.PersonId);
+				
+			}
 		}
 
 	}
