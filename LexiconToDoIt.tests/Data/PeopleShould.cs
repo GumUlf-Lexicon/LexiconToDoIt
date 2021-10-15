@@ -8,7 +8,7 @@ namespace LexiconToDoIt.Tests.Data
 	public class PeopleShould
 	{
 
-
+		// To not repeate similar code in several tests
 		private void ArrangePeople(out Person[] persons, out People people)
 		{
 			// Arrange
@@ -27,8 +27,9 @@ namespace LexiconToDoIt.Tests.Data
 
 			for(int i = 0; i < persons.Length; i++)
 			{
-				Person person = persons[i];
-				persons[i] = people.NewPerson(person.FirstName, person.LastName);
+				Person person = people.NewPerson(persons[i].FirstName, persons[i].LastName);
+				persons[i] = new Person(person.FirstName, person.LastName, person.PersonId);
+				
 			}
 		}
 
@@ -96,22 +97,22 @@ namespace LexiconToDoIt.Tests.Data
 		}
 
 		[Theory]
-		[InlineData(null, null)]
-		[InlineData(null, "Doe")]
-		[InlineData("Jane", null)]
-		[InlineData(null, "")]
-		[InlineData("", null)]
-		[InlineData("", "")]
-		[InlineData("", "Doe")]
-		[InlineData("Joe", "")]
-		public void NotAllowANewPersonWithNullOrEmptyNames(string firstName, string lastName)
+		[InlineData(null, null, "Neither firstName nor lastName can be null or empty!")]
+		[InlineData(null, "Doe", "firstName can not be null or empty!")]
+		[InlineData("Jane", null, "lastName can not be null or empty!")]
+		[InlineData(null, "", "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", null, "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", "", "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", "Doe", "firstName can not be null or empty!")]
+		[InlineData("Joe", "", "lastName can not be null or empty!")]
+		public void NotAllowANewPersonWithNullOrEmptyNames(string firstName, string lastName, string errorMessage)
 		{
 			// Arrange
 			People people = new People();
 
 			// Act and Assert
-			_ = Assert.Throws<ArgumentException>(() => people.NewPerson(firstName, lastName));
-
+			ArgumentException exception = Assert.Throws<ArgumentException>(() => people.NewPerson(firstName, lastName));
+			Assert.Equal(errorMessage, exception.Message);
 		}
 
 		[Fact]

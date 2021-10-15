@@ -20,7 +20,7 @@ namespace LexiconToDoIt.Model
 			{
 				if(string.IsNullOrEmpty(value))
 				{
-					throw new ArgumentException("FirstName cannot be null or empty!");
+					throw new ArgumentException("FirstName can not be null or empty!");
 				}
 
 				firstName = value;
@@ -37,7 +37,7 @@ namespace LexiconToDoIt.Model
 			{
 				if(string.IsNullOrEmpty(value))
 				{
-					throw new ArgumentException("LastName cannot be null or empty!");
+					throw new ArgumentException("LastName can not be null or empty!");
 				}
 
 				lastName = value;
@@ -51,15 +51,15 @@ namespace LexiconToDoIt.Model
 
 			if(string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
 			{
-				throw new ArgumentException("firstName and lastName cannot be null or empty!");
+				throw new ArgumentException("Neither firstName nor lastName can be null or empty!");
 			}
 			else if(string.IsNullOrEmpty(firstName))
 			{
-				throw new ArgumentException("firstName cannot be null or empty!");
+				throw new ArgumentException("firstName can not be null or empty!");
 			}
 			else if(string.IsNullOrEmpty(lastName))
 			{
-				throw new ArgumentException("lastName cannot be null or empty!");
+				throw new ArgumentException("lastName can not be null or empty!");
 			}
 
 			FirstName = firstName;
@@ -69,12 +69,14 @@ namespace LexiconToDoIt.Model
 
 
 		// Implementing comparisons to be able to make testing easier
+		// Uses value equality
 		public static bool operator ==(Person a, Person b)
 		{
-			if(a == null && b == null)
-				return true;
-			else if(a == null || b == null)
+			if(a is null)
+				return b is null;
+			else if(b is null)
 				return false;
+
 
 			return a.FirstName == b.FirstName
 				&& a.LastName == b.LastName
@@ -89,20 +91,17 @@ namespace LexiconToDoIt.Model
 		public override bool Equals(object obj)
 		{
 			//Check for null and compare run-time types.
-			if((obj == null) || !this.GetType().Equals(obj.GetType()))
+			if((obj is null) || !this.GetType().Equals(obj.GetType()))
 			{
 				return false;
 			}
-			else
-			{
-				Person person = (Person)obj;
-				return this == person;
-			}
+
+			return this == (Person)obj;
 		}
 
 		public bool Equals(Person other)
 		{
-			return (other != null) && (this == other);
+			return !(other is null) && (this == other);
 		}
 
 		public override int GetHashCode()

@@ -6,33 +6,45 @@ namespace LexiconToDoIt.Tests.Model
 {
 	public class TodoShould
 	{
-		Todo sut;
-		int todoId;
-		string decription;
-
-		// Creates shareble objects between the tests
-		public TodoShould()
-		{
-			todoId = 5;
-			decription = "Do a test!";
-			sut = new Todo(todoId, decription);
-		}
-
 		[Fact]
 		public void HaveSameIdAfterConstrution()
 		{
+			// Arrange
+			int todoId = 5;
+			string decription = "Do a test!";
+			
+			// Act
+			Todo sut = new Todo(todoId, decription);
+
+			// Assert
 			Assert.Equal(todoId, sut.TodoId);
 		}
 
 		[Fact]
 		public void HaveSameDescriptionAfterConstrution()
 		{
+			// Arrange
+			int todoId = 5;
+			string decription = "Do a test!";
+
+			// Act
+			Todo sut = new Todo(todoId, decription);
+
+			// Assert
 			Assert.Equal(decription, sut.Description);
 		}
 
 		[Fact]
 		public void HaveDoneSetToFalseAfterContruction()
 		{
+			// Arrange
+			int todoId = 5;
+			string decription = "Do a test!";
+
+			// Act
+			Todo sut = new Todo(todoId, decription);
+
+			// Assert
 			Assert.False(sut.Done);
 		}
 

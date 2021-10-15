@@ -25,17 +25,48 @@ namespace LexiconToDoIt.Tests.Model
 		}
 
 		[Theory]
-		[InlineData(null, null)]
-		[InlineData(null, "Doe")]
-		[InlineData("Jane", null)]
-		[InlineData(null, "")]
-		[InlineData("", null)]
-		[InlineData("", "")]
-		[InlineData("", "Doe")]
-		[InlineData("Joe", "")]
-		public void NotAllowANullOrEmptyNames(string firstName, string lastName)
+		[InlineData(null, null, "Neither firstName nor lastName can be null or empty!")]
+		[InlineData(null, "Doe", "firstName can not be null or empty!")]
+		[InlineData("Jane", null, "lastName can not be null or empty!")]
+		[InlineData(null, "", "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", null, "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", "", "Neither firstName nor lastName can be null or empty!")]
+		[InlineData("", "Doe", "firstName can not be null or empty!")]
+		[InlineData("Joe", "", "lastName can not be null or empty!")]
+		public void NotAllowANullOrEmptyNamesInConstructor(string firstName, string lastName, string errorMessage)
 		{
-			_ = Assert.Throws<ArgumentException>(() => new Person(firstName, lastName, 0));
+			ArgumentException exception = Assert.Throws<ArgumentException>(() => new Person(firstName, lastName, 0));
+			Assert.Equal(errorMessage, exception.Message);
 		}
+
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		public void NotAllowFirstNameToBeSetToNullOrEmpty(string firstName)
+		{
+			// Arrange
+			Person sut = new Person("Jane", "Doe", 42);
+			string errorMessage = "FirstName can not be null or empty!";
+
+			// Act and Assert
+			ArgumentException exception = Assert.Throws<ArgumentException>(() => sut.FirstName = firstName);
+			Assert.Equal(errorMessage, exception.Message);
+		}
+
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		public void NotAllowLastNameToBeSetToNullOrEmpty(string lastName)
+		{
+			// Arrange
+			Person sut = new Person("Jane", "Doe", 42);
+			string errorMessage = "LastName can not be null or empty!";
+			
+			// Act and Assert
+			ArgumentException exception = Assert.Throws<ArgumentException>(() => sut.LastName = lastName);
+			Assert.Equal(errorMessage, exception.Message);
+		}
+
+
 	}
 }

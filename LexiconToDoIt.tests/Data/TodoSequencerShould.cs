@@ -12,7 +12,7 @@ namespace LexiconToDoIt.Tests.Data
 			int before = TodoSequencer.TodoId;
 
 			// Act
-			_ = TodoSequencer.nextTodoId();
+			_ = TodoSequencer.NextTodoId();
 			int after = TodoSequencer.TodoId;
 
 			// Assert
@@ -20,13 +20,14 @@ namespace LexiconToDoIt.Tests.Data
 		}
 
 		[Fact]
-		public void TheCurrentNextTodoIdWithNextTodoId()
+		public void ReturnTheNextTodoIdWithNextTodoId()
 		{
 			// Arrange
 			int current = TodoSequencer.TodoId;
+			current++;
 
 			// Act
-			int returnedTodoId = TodoSequencer.nextTodoId();
+			int returnedTodoId = TodoSequencer.NextTodoId();
 
 			// Assert
 			Assert.Equal(current, returnedTodoId);
@@ -34,16 +35,16 @@ namespace LexiconToDoIt.Tests.Data
 		}
 
 		[Fact]
-		public void SetTodoIdToZeroWithZeroOut()
+		public void SetTodoIdToZeroWithReset()
 		{
 			// Arrange
 			// Getting TodoId to be larger than 0 before reset
-			_ = TodoSequencer.nextTodoId();
-			_ = TodoSequencer.nextTodoId();
+			_ = TodoSequencer.NextTodoId();
+			_ = TodoSequencer.NextTodoId();
 			int before = TodoSequencer.TodoId;
 
 			// Act
-			TodoSequencer.zeroOut();
+			TodoSequencer.Reset();
 			int after = TodoSequencer.TodoId;
 
 			// Assert

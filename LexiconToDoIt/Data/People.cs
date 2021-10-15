@@ -5,13 +5,17 @@ namespace LexiconToDoIt.Data
 {
 	public class People
 	{
+		// persons are used an database to store the persons.
 		private static Person[] persons = new Person[0];
 
+		// Returns the number of persons stored.
 		public int Size()
 		{
 			return persons.Length;
 		}
 
+		// Returns an array with all people, or if none are found
+		// an empty array is returned.
 		public Person[] FindAll()
 		{
 			// Copy array to not return a referense to the original.
@@ -27,7 +31,8 @@ namespace LexiconToDoIt.Data
 			return Array.Find(persons, p => p.PersonId == personId);
 		}
 
-		// Creates a new person and inserts into the People database
+		// Creates a new person and inserts into the People database.
+		// The newly created person is returned.
 		// Throws argument exception if firstName or/and lastName
 		// is null or empty.
 		public Person NewPerson(string firstName, string lastName)
@@ -35,19 +40,19 @@ namespace LexiconToDoIt.Data
 			// Names are checked so that they are correct and new person can be created
 			if(string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
 			{
-				throw new ArgumentException("Neither fistName or lastName may be null or empty!");
+				throw new ArgumentException("Neither firstName nor lastName can be null or empty!");
 			}
 			else if(string.IsNullOrEmpty(firstName))
 			{
-				throw new ArgumentException("firstName may not be null or empty!");
+				throw new ArgumentException("firstName can not be null or empty!");
 			}
 			else if(string.IsNullOrEmpty(lastName))
 			{
-				throw new ArgumentException("lastName may not be null or empty!");
+				throw new ArgumentException("lastName can not be null or empty!");
 			}
 
 			// A new unique personId is needed to create the new person
-			int personId = PersonSequencer.nextPersonId();
+			int personId = PersonSequencer.NextPersonId();
 
 			Person newPerson = new Person(firstName, lastName, personId);
 
@@ -65,6 +70,5 @@ namespace LexiconToDoIt.Data
 		{
 			persons = Array.Empty<Person>();
 		}
-
 	}
 }

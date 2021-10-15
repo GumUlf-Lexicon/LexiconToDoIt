@@ -6,32 +6,30 @@ namespace LexiconToDoIt.Tests.Data
 	public class PersonSequencerShould
 	{
 		[Fact]
-		public void IncreaseIdWithOneWithNextPersonId()
+		public void IncreaseIdWithNextPersonId()
 		{
 			// Arrange 
 			int before = PersonSequencer.PersonId;
 
 			// Act
-			int ReturnedPersonId = PersonSequencer.nextPersonId();
+			_ = PersonSequencer.NextPersonId();
 			int after = PersonSequencer.PersonId;
 
 			// Assert
 			Assert.True(before < after);
-			Assert.Equal(ReturnedPersonId + 1, after);
 		}
 
 		[Fact]
-		public void TheCurrentNextPersonIdWithNextPersonId()
+		public void ReturnTheUpdatedNextPersonIdWithNextPersonId()
 		{
 			// Arrange
-			int current = PersonSequencer.PersonId;
+			int before = PersonSequencer.PersonId;
 
 			// Act
-			int returnedPersonId = PersonSequencer.nextPersonId();
+			int returnedPersonId = PersonSequencer.NextPersonId();
 
 			// Assert
-			Assert.Equal(current, returnedPersonId);
-
+			Assert.Equal(before + 1, returnedPersonId);
 		}
 
 		[Fact]
@@ -39,12 +37,12 @@ namespace LexiconToDoIt.Tests.Data
 		{
 			// Arrange
 			// Getting PersonId to be larger than 0 before reset
-			_ = PersonSequencer.nextPersonId();
-			_ = PersonSequencer.nextPersonId();
+			_ = PersonSequencer.NextPersonId();
+			_ = PersonSequencer.NextPersonId();
 			int before = PersonSequencer.PersonId;
 
 			// Act
-			PersonSequencer.reset();
+			PersonSequencer.Reset();
 			int after = PersonSequencer.PersonId;
 
 			// Assert
