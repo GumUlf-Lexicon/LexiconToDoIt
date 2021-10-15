@@ -34,16 +34,17 @@ namespace LexiconToDoIt.Data
 		// Creates a new todo and inserts into the TodoItems database
 		public Todo NewTodo(string todoDescription)
 		{
-
 			// A new unique todoId is needed to create the new todoItem
 			int todoId = TodoSequencer.NextTodoId();
 
 			Todo newTodo = new Todo(todoId, todoDescription);
 
-			// Resize the array so that there is room for a new todo item
+			// The array has no room for the new todo item so the array
+			// has to be resized to make room.
 			Array.Resize(ref todos, todos.Length + 1);
 
-			// To get the array into a valid state with the new person
+			// The new todo needs to be inserted into the todos array,
+			// and is therefore inserted at the end of the array.
 			todos[^1] = newTodo;
 
 			return newTodo;
@@ -52,7 +53,7 @@ namespace LexiconToDoIt.Data
 		// Empties the TodoItems database
 		public void Clear()
 		{
-			todos = Array.Empty<Todo>();
+			Array.Resize(ref todos, 0);
 		}
 
 		// Returns all Todos that have the asked for done status (true
@@ -85,6 +86,8 @@ namespace LexiconToDoIt.Data
 		{
 			return Array.FindAll(todos, t =>
 			{
+				// FindAll expects a bool and cannot handle
+				// if t.Assignee is null. Therefore we check for it.
 				if(t.Assignee is null)
 					return false;
 
@@ -121,19 +124,19 @@ namespace LexiconToDoIt.Data
 		// If index does not exist, is out of bounds, false is returned.
 		private bool RemoveTodoItemInTodosByIndex(int index)
 		{
-			// The index is out of bounds
 			if(index == -1 || index >= todos.Length)
 			{
+				// The index is out of bounds
 				return false;
 			}
 
-			// The index is not the last in the array, so we have move items
 			if(index < todos.Length)
 			{
+				// The index is not the last in the array, so we have to move items
 				Array.Copy(todos, index + 1, todos, index, todos.Length - index - 1);
 			}
 
-			// The array todod is to long, and the last position contains "garbage".
+			// The array todos is to long, and the last position contains "garbage".
 			// We fix that by resizing the array.
 			Array.Resize(ref todos, todos.Length - 1);
 

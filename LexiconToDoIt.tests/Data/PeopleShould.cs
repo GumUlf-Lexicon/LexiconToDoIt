@@ -7,8 +7,6 @@ namespace LexiconToDoIt.Tests.Data
 {
 	public class PeopleShould
 	{
-
-
 		[Fact]
 		public void HaveTheRightSize()
 		{
@@ -168,6 +166,9 @@ namespace LexiconToDoIt.Tests.Data
 			for(int i = 0; i < persons.Length; i++)
 			{
 				Person person = people.NewPerson(persons[i].FirstName, persons[i].LastName);
+
+				// Creating new persons for persons to not have references
+				// to the persons in People
 				persons[i] = new Person(person.FirstName, person.LastName, person.PersonId);
 				
 			}

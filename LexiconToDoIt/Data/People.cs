@@ -18,7 +18,7 @@ namespace LexiconToDoIt.Data
 		// an empty array is returned.
 		public Person[] FindAll()
 		{
-			// Copy array to not return a referense to the original.
+			// Copying persons array to not return a referense to the original.
 			Person[] returnPersonArray = new Person[persons.Length];
 			Array.Copy(persons, returnPersonArray, persons.Length);
 
@@ -68,7 +68,7 @@ namespace LexiconToDoIt.Data
 		// Empties the People database
 		public void Clear()
 		{
-			persons = Array.Empty<Person>();
+			Array.Resize(ref persons, 0);
 		}
 
 		// Removes a person from People by Person-object.

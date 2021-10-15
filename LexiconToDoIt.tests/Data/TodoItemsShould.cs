@@ -231,7 +231,7 @@ namespace LexiconToDoIt.Tests.Data
 
 			// Arrange
 
-			// personId is set to 0 or 1 bc we don't know the real ID yet.
+			// personId is set to 0 or 1 because we don't know the real ID yet.
 			// Now they are used to represent if the todo will be marked
 			// as done or not in the for-loop below. 1 => true, 0 => false.
 			// The todos in todos will be replaced with new todos
@@ -246,6 +246,7 @@ namespace LexiconToDoIt.Tests.Data
 			todos[6] = new Todo(0, "ToDoToDoToDoToDo");
 			todos[7] = new Todo(1, "Too much to do!");
 
+			// We need some people to help us with the tests
 			people = new People();
 			_ = people.NewPerson("Nomen", "Nescio"); // nomen nescio <=> N.N. <=> "I do not know the name."
 			Person jane = people.NewPerson("Jane", "Doe");
@@ -253,20 +254,26 @@ namespace LexiconToDoIt.Tests.Data
 			Person john = people.NewPerson("John", "Doe");
 			_ = people.NewPerson("Ole", "Normann");
 
+			// We want to have som todo items to test
 			todoItems = new TodoItems();
 			todoItems.Clear();
 
+			// todos are used to fill the new todoItems with data
 			for(int i = 0; i < todos.Length; i++)
 			{
 				bool done = todos[i].TodoId == 1;
 
 				Todo todo = todoItems.NewTodo(todos[i].Description);
+
+				// To not have refereces to the todos in todoItems,
+				// new Todos are created for the todos array.
 				todos[i] = new Todo(todo.TodoId, todo.Description);
 
 				todo.Done = done;
 				todos[i].Done = done;
 			}
 
+			// We need to have some todos to have assignees but not all
 			Todo[] allTodoItems = todoItems.FindAll();
 			for(int i = 0; i < allTodoItems.Length; i++)
 			{

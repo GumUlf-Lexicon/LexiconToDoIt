@@ -13,7 +13,7 @@ namespace LexiconToDoIt.Model
 		private string description;
 		public string Description { get => description; set => description = value; }
 		
-		// To know if todo become a isdone
+		// To know if todo become isdone
 		private bool done = false;
 		public bool Done { get => done; set => done = value; }
 		

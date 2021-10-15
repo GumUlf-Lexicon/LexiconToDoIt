@@ -6,7 +6,7 @@ namespace LexiconToDoIt.Tests.Data
 	public class TodoSequencerShould
 	{
 		[Fact]
-		public void IncreaseIdWithOneWithNextTodoId()
+		public void IncreaseIdWithWithNextTodoId()
 		{
 			// Arrange
 			int before = TodoSequencer.TodoId;
@@ -16,21 +16,20 @@ namespace LexiconToDoIt.Tests.Data
 			int after = TodoSequencer.TodoId;
 
 			// Assert
-			Assert.Equal(before + 1, after);
+			Assert.True(before < after);
 		}
 
 		[Fact]
 		public void ReturnTheNextTodoIdWithNextTodoId()
 		{
 			// Arrange
-			int current = TodoSequencer.TodoId;
-			current++;
+			int before = TodoSequencer.TodoId;
 
 			// Act
 			int returnedTodoId = TodoSequencer.NextTodoId();
 
 			// Assert
-			Assert.Equal(current, returnedTodoId);
+			Assert.Equal(before + 1, returnedTodoId);
 
 		}
 

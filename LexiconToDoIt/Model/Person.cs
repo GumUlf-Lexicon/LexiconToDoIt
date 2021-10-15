@@ -48,7 +48,8 @@ namespace LexiconToDoIt.Model
 		// Throws ArguemtException if firstName or lastName is null or empty.
 		public Person(string firstName, string lastName, int personId)
 		{
-
+			// Neither the persons firstname or lastname may be null or empty
+			// (Sorry Teller!)
 			if(string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
 			{
 				throw new ArgumentException("Neither firstName nor lastName can be null or empty!");
