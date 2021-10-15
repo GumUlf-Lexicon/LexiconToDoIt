@@ -70,5 +70,46 @@ namespace LexiconToDoIt.Data
 		{
 			persons = Array.Empty<Person>();
 		}
+
+		// Removes a person from People by Person-object.
+		// If person exists and is removed, true is returned.
+		// If person doesn't exist false is returned.
+		public bool RemovePerson(Person personToRemove)
+		{
+			return RemovePersonInPersonsByIndex(Array.FindIndex(persons, person => person == personToRemove));
+		}
+
+		// Removes a person from People by PersonId.
+		// If person exists and is removed, true is returned.
+		// If person doesn't exist false is returned.
+		public bool RemovePerson(int personId)
+		{
+			return RemovePersonInPersonsByIndex(Array.FindIndex(persons, person => person.PersonId == personId));
+		}
+
+		// Removes a person from persons by array index.
+		// If index exists and remove is successfull true is returned.
+		// If index does not exist, is out of bounds, false is returned.
+		private bool RemovePersonInPersonsByIndex(int index)
+		{
+			// The index is out of bounds
+			if(index == -1 || index >= persons.Length)
+			{
+				return false;
+			}
+
+			// The index is not the last in the array, so we have move items
+			if(index < persons.Length)
+			{
+				Array.Copy(persons, index + 1, persons, index, persons.Length - index - 1);
+			}
+
+			// The array persond is to long, and the last position contains "garbage".
+			// We fix that by resizing the array.
+			Array.Resize(ref persons, persons.Length - 1);
+
+			return true;
+		}
+
 	}
 }

@@ -71,7 +71,7 @@ namespace LexiconToDoIt.Data
 			{
 				// FindAll expects a bool and cannot handle
 				// if t.Assignee is null. Therefore we check for it.
-				if(t.Assignee is null) 
+				if(t.Assignee is null)
 					return false;
 
 				return t.Assignee.PersonId == personId;
@@ -99,5 +99,45 @@ namespace LexiconToDoIt.Data
 			return Array.FindAll(todos, t => t.Assignee is null);
 		}
 
+
+		// Removes a todo from TodoItems by Todo-object.
+		// If todo exists and is removed, true is returned.
+		// If todo doesn't exist false is returend.
+		public bool RemoveTodoItem(Todo todoToRemove)
+		{
+			return RemoveTodoItemInTodosByIndex(Array.FindIndex(todos, todo => todo == todoToRemove));
+		}
+
+		// Removes a todo from TodoItems by todoId.
+		// If todo exists and is removed, true is returned.
+		// If todo doesn't exist false is returend.
+		public bool RemoveTodoItem(int todoId)
+		{
+			return RemoveTodoItemInTodosByIndex(Array.FindIndex(todos, todo => todo.TodoId == todoId));
+		}
+
+		// Removes a todo from todos by array index.
+		// If index exists and remove is successfull true is returned.
+		// If index does not exist, is out of bounds, false is returned.
+		private bool RemoveTodoItemInTodosByIndex(int index)
+		{
+			// The index is out of bounds
+			if(index == -1 || index >= todos.Length)
+			{
+				return false;
+			}
+
+			// The index is not the last in the array, so we have move items
+			if(index < todos.Length)
+			{
+				Array.Copy(todos, index + 1, todos, index, todos.Length - index - 1);
+			}
+
+			// The array todod is to long, and the last position contains "garbage".
+			// We fix that by resizing the array.
+			Array.Resize(ref todos, todos.Length - 1);
+
+			return true;
+		}
 	}
 }
