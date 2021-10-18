@@ -18,7 +18,13 @@ namespace LexiconToDoIt.Data
 		// an empty array is returned.
 		public Person[] FindAll()
 		{
-			// Copying persons array to not return a referense to the original.
+
+			// Creating a new empty array, to not return a reference to persons,
+			// to not do unneeded work with copying the array if empty.
+			if(persons.Length == 0)
+				return Array.Empty<Person>();
+
+			// Copying persons array to not return a reference to the original.
 			Person[] returnPersonArray = new Person[persons.Length];
 			Array.Copy(persons, returnPersonArray, persons.Length);
 
@@ -37,20 +43,6 @@ namespace LexiconToDoIt.Data
 		// is null or empty.
 		public Person NewPerson(string firstName, string lastName)
 		{
-			// Names are checked so that they are correct and new person can be created
-			if(string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
-			{
-				throw new ArgumentException("Neither firstName nor lastName can be null or empty!");
-			}
-			else if(string.IsNullOrEmpty(firstName))
-			{
-				throw new ArgumentException("firstName can not be null or empty!");
-			}
-			else if(string.IsNullOrEmpty(lastName))
-			{
-				throw new ArgumentException("lastName can not be null or empty!");
-			}
-
 			// A new unique personId is needed to create the new person
 			int personId = PersonSequencer.NextPersonId();
 
@@ -76,7 +68,7 @@ namespace LexiconToDoIt.Data
 		// If person doesn't exist false is returned.
 		public bool RemovePerson(Person personToRemove)
 		{
-			return RemovePersonInPersonsByIndex(Array.FindIndex(persons, person => person == personToRemove));
+			return RemovePersonInPersonsByIndex(Array.FindIndex(persons, person => person.Equals(personToRemove)));
 		}
 
 		// Removes a person from People by PersonId.

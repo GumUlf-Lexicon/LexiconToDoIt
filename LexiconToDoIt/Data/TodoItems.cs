@@ -18,7 +18,12 @@ namespace LexiconToDoIt.Data
 		// empty array is returned.
 		public Todo[] FindAll()
 		{
-			// Copy array to not return a referense to the original array.
+			// Creating a new empty array, to not return a reference to todos,
+			// to not do unneeded work with copying the array if empty.
+			if(todos.Length == 0)
+				return Array.Empty<Todo>();
+
+			// Copy array to not return a reference to the original array.
 			Todo[] returnTodoArray = new Todo[todos.Length];
 			Array.Copy(todos, returnTodoArray, todos.Length);
 
@@ -108,7 +113,7 @@ namespace LexiconToDoIt.Data
 		// If todo doesn't exist false is returend.
 		public bool RemoveTodoItem(Todo todoToRemove)
 		{
-			return RemoveTodoItemInTodosByIndex(Array.FindIndex(todos, todo => todo == todoToRemove));
+			return RemoveTodoItemInTodosByIndex(Array.FindIndex(todos, todo => todo.Equals(todoToRemove)));
 		}
 
 		// Removes a todo from TodoItems by todoId.

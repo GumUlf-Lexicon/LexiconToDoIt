@@ -26,13 +26,13 @@ namespace LexiconToDoIt.Tests.Model
 
 		[Theory]
 		[InlineData(null, null, "Neither firstName nor lastName can be null or empty!")]
-		[InlineData(null, "Doe", "firstName can not be null or empty!")]
-		[InlineData("Jane", null, "lastName can not be null or empty!")]
+		[InlineData(null, "Doe", "FirstName can not be null or empty!")]
+		[InlineData("Jane", null, "LastName can not be null or empty!")]
 		[InlineData(null, "", "Neither firstName nor lastName can be null or empty!")]
 		[InlineData("", null, "Neither firstName nor lastName can be null or empty!")]
 		[InlineData("", "", "Neither firstName nor lastName can be null or empty!")]
-		[InlineData("", "Doe", "firstName can not be null or empty!")]
-		[InlineData("Joe", "", "lastName can not be null or empty!")]
+		[InlineData("", "Doe", "FirstName can not be null or empty!")]
+		[InlineData("Joe", "", "LastName can not be null or empty!")]
 		public void NotAllowANullOrEmptyNamesInConstructor(string firstName, string lastName, string errorMessage)
 		{
 			ArgumentException exception = Assert.Throws<ArgumentException>(() => new Person(firstName, lastName, 0));

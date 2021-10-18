@@ -54,14 +54,6 @@ namespace LexiconToDoIt.Model
 			{
 				throw new ArgumentException("Neither firstName nor lastName can be null or empty!");
 			}
-			else if(string.IsNullOrEmpty(firstName))
-			{
-				throw new ArgumentException("firstName can not be null or empty!");
-			}
-			else if(string.IsNullOrEmpty(lastName))
-			{
-				throw new ArgumentException("lastName can not be null or empty!");
-			}
 
 			FirstName = firstName;
 			LastName = lastName;
@@ -71,23 +63,6 @@ namespace LexiconToDoIt.Model
 
 		// Implementing comparisons to be able to make testing easier
 		// Uses value equality
-		public static bool operator ==(Person a, Person b)
-		{
-			if(a is null)
-				return b is null;
-			else if(b is null)
-				return false;
-
-
-			return a.FirstName == b.FirstName
-				&& a.LastName == b.LastName
-				&& a.PersonId == b.PersonId;
-		}
-
-		public static bool operator !=(Person a, Person b)
-		{
-			return !(a == b);
-		}
 
 		public override bool Equals(object obj)
 		{
@@ -97,12 +72,15 @@ namespace LexiconToDoIt.Model
 				return false;
 			}
 
-			return this == (Person)obj;
+			return Equals((Person)obj);
 		}
 
 		public bool Equals(Person other)
 		{
-			return !(other is null) && (this == other);
+			return !(other is null)
+				&& FirstName == other.FirstName
+				&& LastName == other.LastName
+				&& PersonId == other.PersonId;
 		}
 
 		public override int GetHashCode()

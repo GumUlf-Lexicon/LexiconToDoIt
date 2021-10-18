@@ -34,7 +34,7 @@ namespace LexiconToDoIt.Tests.Data
 
 			foreach(Todo todo in todos)
 			{
-				Assert.Contains(sut, sutTodo => sutTodo == todo);
+				Assert.Contains(sut, sutTodo => sutTodo.Equals(todo));
 			}
 		}
 
@@ -99,13 +99,13 @@ namespace LexiconToDoIt.Tests.Data
 			{
 				if(item.Done)
 				{
-					Assert.Contains(sutDoneItems, sutTodo => sutTodo == item);
-					Assert.DoesNotContain(sutNotDoneItems, sutTodo => sutTodo == item);
+					Assert.Contains(sutDoneItems, sutTodo => sutTodo.Equals(item));
+					Assert.DoesNotContain(sutNotDoneItems, sutTodo => sutTodo.Equals(item));
 				}
 				else
 				{
-					Assert.Contains(sutNotDoneItems, sutTodo => sutTodo == item);
-					Assert.DoesNotContain(sutDoneItems, sutTodo => sutTodo == item);
+					Assert.Contains(sutNotDoneItems, sutTodo => sutTodo.Equals(item));
+					Assert.DoesNotContain(sutDoneItems, sutTodo => sutTodo.Equals(item));
 				}
 			}
 
@@ -171,11 +171,11 @@ namespace LexiconToDoIt.Tests.Data
 			{
 				if(item.Assignee is null)
 				{
-					Assert.Contains(isUnassigned, sutTodo => sutTodo == item);
+					Assert.Contains(isUnassigned, sutTodo => sutTodo.Equals(item));
 				}
 				else
 				{
-					Assert.DoesNotContain(isUnassigned, sutTodo => sutTodo == item);
+					Assert.DoesNotContain(isUnassigned, sutTodo => sutTodo.Equals(item));
 				}
 			}
 		}
@@ -194,9 +194,9 @@ namespace LexiconToDoIt.Tests.Data
 
 			// Assert
 			Assert.True(todos.Length > 0);
-			Assert.Contains(sutBefore, sutItem => sutItem == todoItemToRemove);
+			Assert.Contains(sutBefore, sutItem => sutItem.Equals(todoItemToRemove));
 			Assert.True(removeSuccess);
-			Assert.DoesNotContain(sut, sutItem => sutItem == todoItemToRemove);
+			Assert.DoesNotContain(sut, sutItem => sutItem.Equals(todoItemToRemove));
 
 
 		}

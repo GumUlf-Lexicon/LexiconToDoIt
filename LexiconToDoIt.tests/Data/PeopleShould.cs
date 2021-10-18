@@ -34,7 +34,7 @@ namespace LexiconToDoIt.Tests.Data
 
 			foreach(Person person in persons)
 			{
-				Assert.Contains(sut, sutPerson => sutPerson == person);
+				Assert.Contains(sut, sutPerson => sutPerson.Equals(person));
 			}
 		}
 
@@ -72,13 +72,13 @@ namespace LexiconToDoIt.Tests.Data
 
 		[Theory]
 		[InlineData(null, null, "Neither firstName nor lastName can be null or empty!")]
-		[InlineData(null, "Doe", "firstName can not be null or empty!")]
-		[InlineData("Jane", null, "lastName can not be null or empty!")]
+		[InlineData(null, "Doe", "FirstName can not be null or empty!")]
+		[InlineData("Jane", null, "LastName can not be null or empty!")]
 		[InlineData(null, "", "Neither firstName nor lastName can be null or empty!")]
 		[InlineData("", null, "Neither firstName nor lastName can be null or empty!")]
 		[InlineData("", "", "Neither firstName nor lastName can be null or empty!")]
-		[InlineData("", "Doe", "firstName can not be null or empty!")]
-		[InlineData("Joe", "", "lastName can not be null or empty!")]
+		[InlineData("", "Doe", "FirstName can not be null or empty!")]
+		[InlineData("Joe", "", "LastName can not be null or empty!")]
 		public void NotAllowANewPersonWithNullOrEmptyNames(string firstName, string lastName, string errorMessage)
 		{
 			// Arrange
@@ -119,9 +119,9 @@ namespace LexiconToDoIt.Tests.Data
 
 			// Assert
 			Assert.True(persons.Length > 0);
-			Assert.Contains(sutBefore, sutPerson => sutPerson == todoItemToRemove);
+			Assert.Contains(sutBefore, sutPerson => sutPerson.Equals(todoItemToRemove));
 			Assert.True(removeSuccess);
-			Assert.DoesNotContain(sut, sutPerson => sutPerson == todoItemToRemove);
+			Assert.DoesNotContain(sut, sutPerson => sutPerson.Equals(todoItemToRemove));
 
 
 		}
